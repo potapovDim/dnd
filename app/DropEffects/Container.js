@@ -130,8 +130,9 @@ export default class Container extends Component {
   render() {
     const {connectDropTarget} = this.props;
     const {boxes} = this.state;
-    const a = findBuildPosition(boxes)
-    calculateTubes(a)
+    findBuildPosition(boxes)
+    const tubes = calculateTubes(findBuildPosition(boxes))
+    console.log(tubes)
     return connectDropTarget(
       <div style={styles}>
         {Object

@@ -2,7 +2,6 @@ import _ from 'lodash'
 export const calculateTubes = buildingsWithPositions => {
   let tubes = {}
   if (Object.keys(buildingsWithPositions).length === 7) {
-    console.log(Object.keys(buildingsWithPositions))
     tubes['first'] = 2 * Math.sqrt(
         _.reduce(_.omit(buildingsWithPositions, ['firstBuild']), (result, value, key)=> {
           result += value.waterNeedingForThisBuild
@@ -39,6 +38,20 @@ export const calculateTubes = buildingsWithPositions => {
             result += value.waterNeedingForThisBuild
             return result
           }, 0) / (Math.PI))
-    console.log(tubes)
+    const tubesAfterAssert = _.mapValues(tubes, val=> {
+      if (val <= 0.04) {
+        return 0.04
+      }
+      else if (0.04 < val && val <= 0.05) {
+        return 0.05
+      }
+      else if (0.05 < val && val <= 0.08) {
+        return 0.08
+      }
+      else if (0.08 < val && val <= 0.1) {
+        return 0.1
+      }
+    })
+    return tubesAfterAssert
   }
 }
