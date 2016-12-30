@@ -51,13 +51,14 @@ export default class DraggableBox extends Component {
 
   render() {
     const {newTitle} = this.state
-    const {title, connectDragSource, id, removeBox, addBloc, left, top, parentId, roadToParent, calculateRoad} = this.props;
+    const {title, connectDragSource, id, removeBox, addBloc, left, top, parentId} = this.props;
     const buttonRender = title === 'Насосна станція'
     return connectDragSource(
-      <div style={getStyles(this.props)}>
-        <Box title={title}
-             roadToParent={roadToParent}/>
-        {!buttonRender && <div>
+      <div style={getStyles(this.props)} className = "drag-box"
+          onMouseEnter={() => console.log('hover--------------')}
+          onMouseLeave={() => console.log('leav - -- -- - - - --')}>
+        <Box title={title}/>
+       <div className = "option-menu">
           <div>
             <button className="box-button" onClick={()=>removeBox(id)}>Видалити</button>
           </div>
@@ -71,7 +72,7 @@ export default class DraggableBox extends Component {
           </div>
           <input className="box-button" placeholder="Назва ланки"
                  onChange={(e)=>{this.setState({newTitle:e.target.value})}}/>
-        </div>}
+        </div>
       </div>
     );
   }

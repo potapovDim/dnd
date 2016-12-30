@@ -29,6 +29,7 @@ export default class BoxDragPreview extends Component {
   }
 
   tick() {
+    console.log('0-------------------')
     this.setState({
       tickTock: !this.state.tickTock
     });

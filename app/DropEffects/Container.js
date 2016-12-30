@@ -7,9 +7,6 @@ import {DropTarget} from 'react-dnd';
 import _ from 'lodash'
 import uuid from 'node-uuid'
 
-import {buildNewBuildingsPositions} from './calculateBuildings'
-import {findBuildPosition} from './findBuildPosition'
-import {calculateTubes} from './calculateTubes'
 const styles = {
   width: 10000,
   height: 800,
@@ -48,12 +45,6 @@ export default class Container extends Component {
     }
   }
 
-  componentWillMount() {
-    const {buildings} = this.props
-    const boxes = {...this.state.boxes}
-    const newBoxes = buildNewBuildingsPositions(boxes, buildings)
-    this.setState({boxes: newBoxes})
-  }
 
   moveBox(id, left, top) {
     this.setState(update(this.state, {
@@ -81,38 +72,7 @@ export default class Container extends Component {
     this.setState({boxes: newBox})
   }
 
-  calculateRoadToFatherComponent = (id, parentId, top, left) => {
 
-    const RoadToPatent = {}
-    const boxes = this.state.boxes
-    if (boxes[parentId]) {
-      const {top:fatherTop, left:fatherLeft} = boxes[parentId]
-      if (fatherTop >= top && fatherLeft >= left) {
-        RoadToPatent.leftToFather = (fatherLeft - left) / 10
-        RoadToPatent.topToFather = (fatherTop - top) / 10
-        RoadToPatent.words = 'вниз вправо'
-      }
-      else if (fatherTop >= top && fatherLeft <= left) {
-        RoadToPatent.leftToFather = (left - fatherLeft) / 10
-        RoadToPatent.topToFather = (fatherTop - top) / 10
-        RoadToPatent.words = 'вниз вліво'
-      }
-      else if (fatherTop <= top && fatherLeft >= left) {
-        RoadToPatent.leftToFather = (fatherLeft - left) / 10
-        RoadToPatent.topToFather = (top - fatherTop) / 10
-        RoadToPatent.words = 'вверх вправо'
-      }
-      else if (fatherTop <= top && fatherLeft <= left) {
-        RoadToPatent.leftToFather = (left - fatherLeft) / 10
-        RoadToPatent.topToFather = (top - fatherTop) / 10
-        RoadToPatent.words = 'вверх вліво'
-      }
-      boxes[id].roadToParent = RoadToPatent
-      console.log(boxes)
-      this.setState({boxes: boxes})
-    }
-    else return
-  }
 
   renderBox(item, key) {
     return (
@@ -121,8 +81,7 @@ export default class Container extends Component {
         key={key}
         id={key}
         removeBox={this.removeBox}
-        addBloc={this.addBox}
-        calculateRoad={this.calculateRoadToFatherComponent}/>
+        addBloc={this.addBox}/>
     );
   }
 
@@ -130,9 +89,6 @@ export default class Container extends Component {
   render() {
     const {connectDropTarget} = this.props;
     const {boxes} = this.state;
-    findBuildPosition(boxes)
-    const tubes = calculateTubes(findBuildPosition(boxes))
-    console.log(tubes)
     return connectDropTarget(
       <div style={styles}>
         {Object

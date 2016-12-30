@@ -2,3 +2,10 @@
     width: 180px;
     height: 20px;
 }
+
+.option-menu {
+    visibility: hidden; 
+}
+.drag-box:hover .option-menu {
+    visibility: visible;
+}
