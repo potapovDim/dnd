@@ -16,12 +16,10 @@ export default class Box extends Component {
   }
 
   render() {
-    const {title, yellow, roadToParent} = this.props;
-    console.log(yellow)
+    const {title, yellow} = this.props;
     const backgroundColor = yellow
       ? 'yellow'
       : 'white';
-      console.log(backgroundColor)
     const borderRadius = '25px'
     return (
       <div

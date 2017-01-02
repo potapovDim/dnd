@@ -3,19 +3,29 @@ import Container from './Container';
 import CustomDragLayer from './CustomDragLayer';
 import {DragDropContext} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-
+import DropTargets from './DropTargets'
 @DragDropContext(HTML5Backend)
 export default class DragAroundCustomDragLayer extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleSnapToGridAfterDropChange = this.handleSnapToGridAfterDropChange.bind(this);
-    this.handleSnapToGridWhileDraggingChange = this.handleSnapToGridWhileDraggingChange.bind(this);
-
-    this.state = {
-      snapToGridAfterDrop: false,
-      snapToGridWhileDragging: false
-    };
+  state = {
+    napToGridAfterDrop: false,
+    snapToGridWhileDragging: false,
+    diffTypeMoveElement: false
+  }
+  handleSnapToGridAfterDropChange = () => {
+    this.setState({
+      snapToGridAfterDrop: !this.state.snapToGridAfterDrop
+    })
+  }
+  diffTypeMoveElement = () => {
+    console.log('dsjhakjdjkahsdjahsjkdask')
+    this.setState({
+      diffTypeMoveElement: !this.state.diffTypeMoveElement
+    })
+  }
+  handleSnapToGridWhileDraggingChange =() => {
+    this.setState({
+      snapToGridWhileDragging: !this.state.snapToGridWhileDragging
+    })
   }
 
   buildings = {
@@ -26,13 +36,29 @@ export default class DragAroundCustomDragLayer extends Component {
   }
 
   render() {
-    const {snapToGridAfterDrop, snapToGridWhileDragging} = this.state;
+    const {snapToGridAfterDrop, snapToGridWhileDragging, diffTypeMoveElement} = this.state;
+    console.log(diffTypeMoveElement)
 
     return (
       <div>
-        <Container snapToGrid={snapToGridAfterDrop} buildings={this.buildings}/>
-        <CustomDragLayer snapToGrid={snapToGridWhileDragging}/>
+        {
+        diffTypeMoveElement ? 
+        <DropTargets />
+        :
+        <div>
+          <Container snapToGrid={snapToGridAfterDrop} buildings={this.buildings}/>
+          <CustomDragLayer snapToGrid={snapToGridWhileDragging}/>
+          </div>
+          
+        }
         <p>
+        <br />
+          <label>
+            <input type='checkbox'
+                   checked={diffTypeMoveElement}
+                   onChange={this.diffTypeMoveElement}/>
+            <small>Інший спосіб переміщення компонентів</small>
+          </label>
           <label>
             <input type='checkbox'
                    checked={snapToGridWhileDragging}
@@ -51,15 +77,4 @@ export default class DragAroundCustomDragLayer extends Component {
     );
   }
 
-  handleSnapToGridAfterDropChange() {
-    this.setState({
-      snapToGridAfterDrop: !this.state.snapToGridAfterDrop
-    });
-  }
-
-  handleSnapToGridWhileDraggingChange() {
-    this.setState({
-      snapToGridWhileDragging: !this.state.snapToGridWhileDragging
-    });
-  }
 }
