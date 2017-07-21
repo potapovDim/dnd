@@ -1,19 +1,21 @@
-import React, {Component, PropTypes} from 'react';
-import ItemTypes from './ItemTypes';
-import Box from './Box';
-import {DragSource} from 'react-dnd';
-import {getEmptyImage} from 'react-dnd-html5-backend';
+import React, {Component, PropTypes} from 'react'
+import ItemTypes from './ItemTypes'
+import Box from './Box'
+import {DragSource} from 'react-dnd'
+import {getEmptyImage} from 'react-dnd-html5-backend'
+import pubsub from 'pubsub-js'
 
 const boxSource = {
   beginDrag(props) {
-    const {id, title, left, top} = props;
-    return {id, title, left, top};
+    pubsub.publish('DND', {type: 'beginDrag'})
+    const {id, title, left, top} = props
+    return {id, title, left, top}
   }
-};
+}
 
 function getStyles(props) {
-  const {left, top, isDragging} = props;
-  const transform = `translate3d(${left}px, ${top}px, 0)`;
+  const {left, top, isDragging} = props
+  const transform = `translate3d(${left}px, ${top}px, 0)`
 
   return {
     position: 'absolute',
@@ -21,7 +23,7 @@ function getStyles(props) {
     WebkitTransform: transform,
     opacity: isDragging ? 0 : 1,
     height: isDragging ? 0 : ''
-  };
+  }
 }
 
 @DragSource(ItemTypes.BOX, boxSource, (connect, monitor) => ({
@@ -38,7 +40,7 @@ export default class DraggableBox extends Component {
     title: PropTypes.string.isRequired,
     left: PropTypes.number.isRequired,
     top: PropTypes.number.isRequired
-  };
+  }
   state = {
     newTitle: null
   }
@@ -46,12 +48,12 @@ export default class DraggableBox extends Component {
   componentDidMount() {
     this.props.connectDragPreview(getEmptyImage(), {
       captureDraggingState: true
-    });
+    })
   }
 
   render() {
     const {newTitle} = this.state
-    const {title, connectDragSource, id, removeBox, addBloc, left, top, parentId} = this.props;
+    const {title, connectDragSource, id, removeBox, addBloc, left, top, parentId} = this.props
     const buttonRender = title === 'Насосна станція'
     return connectDragSource(
       <div style={getStyles(this.props)} className = "drag-box"
@@ -74,6 +76,6 @@ export default class DraggableBox extends Component {
                  onChange={(e)=>{this.setState({newTitle:e.target.value})}}/>
         </div>
       </div>
-    );
+    )
   }
 }

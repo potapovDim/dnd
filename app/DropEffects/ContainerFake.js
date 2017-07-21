@@ -1,9 +1,9 @@
-import React, {Component, PropTypes} from 'react';
-import update from 'react/lib/update';
-import ItemTypes from './ItemTypes';
-import DraggableBox from './DraggableBox';
-import snapToGrid from './snapToGrid';
-import {DropTarget} from 'react-dnd';
+import React, {Component, PropTypes} from 'react'
+import update from 'react/lib/update'
+import ItemTypes from './ItemTypes'
+import DraggableBox from './DraggableBox'
+import snapToGrid from './snapToGrid'
+import {DropTarget} from 'react-dnd'
 import _ from 'lodash'
 import uuid from 'node-uuid'
 
@@ -12,7 +12,7 @@ const styles = {
   height: 800,
   border: '1px solid black',
   position: 'relative'
-};
+}
 
 export default class ContainerFace extends Component {
   static propTypes = {
@@ -46,10 +46,10 @@ export default class ContainerFace extends Component {
         id={key}
         removeBox={this.removeBox}
         addBloc={this.addBox}/>
-    );
+    )
   }
   render() {
-    const {boxes} = this.state;
+    const {boxes} = this.state
     return (
       <div style={styles}>
         {Object
@@ -57,6 +57,6 @@ export default class ContainerFace extends Component {
           .map(key => this.renderBox(boxes[key], key))
         }
       </div>
-    );
+    )
   }
 }

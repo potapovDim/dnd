@@ -1,11 +1,11 @@
 .box-button {
-    width: 180px;
-    height: 20px;
+    width: 180px
+    height: 20px
 }
 
 .option-menu {
-    visibility: hidden; 
+    visibility: hidden 
 }
 .drag-box:hover .option-menu {
-    visibility: visible;
+    visibility: visible
 }

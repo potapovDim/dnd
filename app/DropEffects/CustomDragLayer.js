@@ -1,8 +1,8 @@
-import React, { Component, PropTypes } from 'react';
-import ItemTypes from './ItemTypes';
-import BoxDragPreview from './BoxDragPreview';
-import snapToGrid from './snapToGrid';
-import { DragLayer } from 'react-dnd';
+import React, { Component, PropTypes } from 'react'
+import ItemTypes from './ItemTypes'
+import BoxDragPreview from './BoxDragPreview'
+import snapToGrid from './snapToGrid'
+import { DragLayer } from 'react-dnd'
 
 const layerStyles = {
   position: 'fixed',
@@ -12,31 +12,31 @@ const layerStyles = {
   top: 0,
   width: '100%',
   height: '100%'
-};
+}
 
 function getItemStyles(props) {
-  const { initialOffset, currentOffset } = props;
+  const { initialOffset, currentOffset } = props
   if (!initialOffset || !currentOffset) {
     return {
       display: 'none'
-    };
+    }
   }
 
-  let { x, y } = currentOffset;
+  let { x, y } = currentOffset
 
   if (props.snapToGrid) {
-    x -= initialOffset.x;
-    y -= initialOffset.y;
-    [x, y] = snapToGrid(x, y);
-    x += initialOffset.x;
-    y += initialOffset.y;
+    x -= initialOffset.x
+    y -= initialOffset.y
+    [x, y] = snapToGrid(x, y)
+    x += initialOffset.x
+    y += initialOffset.y
   }
 
-  const transform = `translate(${x}px, ${y}px)`;
+  const transform = `translate(${x}px, ${y}px)`
   return {
     transform: transform,
     WebkitTransform: transform
-  };
+  }
 }
 
 @DragLayer(monitor => ({
@@ -60,16 +60,16 @@ export default class CustomDragLayer extends Component {
     }),
     isDragging: PropTypes.bool.isRequired,
     snapToGrid: PropTypes.bool.isRequired
-  };
+  }
 
   renderItem(type, item) {
     switch (type) {
       case ItemTypes.BOX:
         return (
           <BoxDragPreview title={item.title} />
-        );
+        )
       default:
-        return null;
+        return null
     }
   }
 
@@ -85,6 +85,6 @@ export default class CustomDragLayer extends Component {
           {this.renderItem(itemType, item)}
         </div>
       </div>
-    );
+    )
   }
 }

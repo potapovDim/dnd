@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component, PropTypes} from 'react'
 
 export default class Box extends Component {
   styles = {
@@ -9,23 +9,23 @@ export default class Box extends Component {
   static propTypes = {
     title: PropTypes.string,
     yellow: PropTypes.bool
-  };
+  }
 
   shouldComponentUpdate(nextProps) {
     return this.props.yellow !== nextProps.yellow
   }
 
   render() {
-    const {title, yellow} = this.props;
+    const {title, yellow} = this.props
     const backgroundColor = yellow
       ? 'yellow'
-      : 'white';
+      : 'white'
     const borderRadius = '25px'
     return (
       <div
         style={{...this.styles,backgroundColor,borderRadius}}>
         {title}
       </div>
-    );
+    )
   }
 }
